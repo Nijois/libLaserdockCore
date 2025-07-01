@@ -48,6 +48,9 @@ protected:
 private slots:
     void onTimerTimeout();
 
+public slots:
+    void setPlayerMode(int mode);
+
 private:
     enum SFX{
         BAT_A,
@@ -105,6 +108,7 @@ private:
     bool m_keyPressedDown = false;
     float m_axis = 0.f;
 
+    int playerMode = 0;
 
     std::pair<int, int> m_score;
     QScopedPointer<ldTextLabel> m_scoreLabel;

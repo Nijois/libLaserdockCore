@@ -119,6 +119,18 @@ void ldPongVisualizer::draw() {
         if(m_axis < 0.05f || m_axis > 0.05f) {
             moveBoard(0, BOARD_STEP * m_axis * 1.5f);
         }
+        if (playerMode == 1)
+        {
+            if (m_keyPressedUpBoard1) { //MEO: when added A.I., swapped player keys
+                moveBoard(1, BOARD_STEP);
+            }
+            if (m_keyPressedDownBoard1) {
+                moveBoard(1, -1 * BOARD_STEP);
+            }
+            if (m_axis < 0.05f || m_axis > 0.05f) {
+                moveBoard(1, BOARD_STEP * m_axis * 1.5f);
+            }
+        }
     }
     if (m_keyPressedUpBoard1) { //MEO: when added A.I., swapped player keys
         //boardUp(1); //ToDo -reimplement when AI/2nd player choice
@@ -126,12 +138,17 @@ void ldPongVisualizer::draw() {
     if (m_keyPressedDownBoard1) {
         //boardDown(1);
     }
+    if (playerMode == 0)
+    {
+        //A.I.
+        m_secondBoardBottomY += 0.1f * (((1.0f + m_ballPos.y) - ((1.0f + m_secondBoardBottomY) + (BOARD_LENGTH / 2.0f))) * qPow((1.0f + m_ballPos.x) / 2.0f, 2.5f));
+        m_secondBoardBottomY = std::max(m_secondBoardBottomY, MIN_Y);
+        m_secondBoardBottomY = std::min(m_secondBoardBottomY, MAX_Y);
 
-    //A.I.
-    m_secondBoardBottomY += 0.1f * (((1.0f + m_ballPos.y) - ((1.0f + m_secondBoardBottomY) + (BOARD_LENGTH / 2.0f))) * qPow((1.0f + m_ballPos.x) / 2.0f, 2.5f));
-    m_secondBoardBottomY = std::max(m_secondBoardBottomY, MIN_Y);
-    m_secondBoardBottomY = std::min(m_secondBoardBottomY, MAX_Y);
-    if (m_secondBoardBottomY != m_secondBoardBottomY) m_secondBoardBottomY = MIN_Y; //check for infinity and correct
+    }
+ 
+
+       if (m_secondBoardBottomY != m_secondBoardBottomY) m_secondBoardBottomY = MIN_Y; //check for infinity and correct
 
     /*
      * DRAW
@@ -346,6 +363,11 @@ void ldPongVisualizer::onTimerTimeout() {
     if(m_startGameTimerValue == 0) {
         m_timer.stop();
     }
+}
+
+void ldPongVisualizer::setPlayerMode(int mode) {
+    playerMode = mode;
+   qDebug() << "Value of x:" << mode;
 }
 
 void ldPongVisualizer::onGameReset()

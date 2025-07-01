@@ -68,6 +68,23 @@ Window {
 
                 onActivated: activateVis(currentIndex)
             }
+            RowLayout {
+                visible: visComboBox.currentIndex == 9
+                ComboBox {
+                    id: vplayerMode
+                    focusPolicy: Qt.NoFocus
+                    model: ListModel {
+                        ListElement {
+                            text: "1-Player"
+                        }
+                        ListElement {
+                            text: "2-Player"
+                        }
+
+                    }
+                    onActivated: game.set_playerMode(currentIndex)
+                }
+            }
         }
 
         RowLayout {

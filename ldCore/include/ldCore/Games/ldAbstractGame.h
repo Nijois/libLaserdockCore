@@ -48,6 +48,8 @@ class LDCORESHARED_EXPORT ldAbstractGame : public QObject
     /** activate game */
     QML_WRITABLE_PROPERTY(bool, isActive)
 
+    QML_WRITABLE_PROPERTY(int, playerMode)
+
     /** level list name */
     Q_PROPERTY(QString levelListName READ get_levelListName CONSTANT)
 
